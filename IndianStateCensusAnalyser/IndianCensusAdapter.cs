@@ -11,17 +11,14 @@ namespace IndianStateCensusAnalyser
     public class IndianCensusAdapter : CensusAdapter
     {
         string[] censusData;
-        // Dictionary<string, StateCodeDataDAO> datamap;
-        Dictionary<string, CensusDTO> censusState;
-        //Dictionary<string, CensusDTO> datamap;
+        Dictionary<string, CensusDTO> censusStateAndCode;
 
         //Method to load csv file return in the form of dictionary
         public Dictionary<string, CensusDTO> LoadCensusData(string csvFilePath, string dataHeaders)
         {
             try
             {
-                //datamap = new Dictionary<string, StateCodeDataDAO>();
-                censusState = new Dictionary<string, CensusDTO>();
+                censusStateAndCode = new Dictionary<string, CensusDTO>();
                 censusData = GetCensusData(csvFilePath, dataHeaders);
                 foreach (string data in censusData.Skip(1))
                 {
@@ -31,17 +28,16 @@ namespace IndianStateCensusAnalyser
                     }
                     string[] coloumn = data.Split(',');
                     if (csvFilePath.Contains("IndiaStateCode.csv"))
-                        censusState.Add(coloumn[0], new CensusDTO(new StateCodeDataDAO(coloumn[0], coloumn[1], coloumn[2], coloumn[3])));
+                        censusStateAndCode.Add(coloumn[0], new CensusDTO(new StateCodeDataDAO(coloumn[0], coloumn[1], coloumn[2], coloumn[3])));
                     if (csvFilePath.Contains("IndianPopulation.csv"))
-                        censusState.Add(coloumn[0], new CensusDTO(new CensusDataDAO(coloumn[0], coloumn[1], coloumn[2], coloumn[3])));
+                        censusStateAndCode.Add(coloumn[0], new CensusDTO(new CensusDataDAO(coloumn[0], coloumn[1], coloumn[2], coloumn[3])));
                 }
-                return censusState;
+                return censusStateAndCode;
             }
             catch (CensusAnalyserException ex)
             {
                 throw ex;
             }
         }
-
     }
 }

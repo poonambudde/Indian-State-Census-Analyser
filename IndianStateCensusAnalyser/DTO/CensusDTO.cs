@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace IndianStateCensusAnalyser.DTO
+namespace IndianStateCensusAnalyser
 {
     public class CensusDTO
     {
